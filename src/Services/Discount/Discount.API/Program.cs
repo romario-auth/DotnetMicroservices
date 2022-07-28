@@ -1,4 +1,4 @@
-using Discount.API.Entities.Extensions;
+using Discount.API.Extensions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
