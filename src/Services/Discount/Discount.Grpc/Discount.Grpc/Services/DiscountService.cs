@@ -36,5 +36,38 @@ namespace Discount.Grpc.Services
             CouponModel couponModel = _mapper.Map<CouponModel>(coupon);
             return couponModel;
         }
+
+        public override async Task<CouponModel> CreateDiscount(CreateDiscountRequest request, ServerCallContext context)
+        {
+            var coupon = _mapper.Map<Coupon>(request.Coupon);
+
+            await _discountrepository.CreateDiscount(coupon);
+            _logger.LogInformation("Discount is successfully created. ProductName : {ProductName}", coupon.ProductName);
+
+            var couponModel = _mapper.Map<CouponModel>(coupon);
+            return couponModel;
+        }
+
+        public override async Task<CouponModel> UpdateDiscount(UpdateDiscountRequest request, ServerCallContext context)
+        {
+            var coupon = _mapper.Map<Coupon>(request.Coupon);
+
+            await _discountrepository.UpdateDiscount(coupon);
+            _logger.LogInformation("Discount is successfully updated. ProductName : {ProductName}", coupon.ProductName);
+
+            var couponModel = _mapper.Map<CouponModel>(coupon);
+            return couponModel;
+        }
+
+        public override async Task<DeleteDiscountResponse> DeleteDiscount(DeleteDiscountRequest request, ServerCallContext context)
+        {
+            var deleted = await _discountrepository.DeleteDiscount(request.ProductName);
+            var response = new DeleteDiscountResponse
+            {
+                Success = deleted
+            };
+
+            return response;
+        }
     }
 }
