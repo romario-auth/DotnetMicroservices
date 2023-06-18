@@ -22,7 +22,7 @@ namespace Catalog.API.Controllers
             _repository = repository ?? throw new ArgumentNullException(nameof(repository));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
-
+        #region get
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<Product>), (int) HttpStatusCode.OK)]
         public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
@@ -54,7 +54,7 @@ namespace Catalog.API.Controllers
             var products = await _repository.GetProductByCategory(category);
             return Ok(products);
         }
-
+        #endregion
         [HttpPost]
         [ProducesResponseType(typeof(Product), (int)HttpStatusCode.OK)]
         public async Task<ActionResult<Product>> CreateProduct([FromBody] Product product)
